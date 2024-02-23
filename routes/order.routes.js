@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/getorders", getOrders);
 router.post("/createorder", createOrders);
-// router.get("/ordercount", getOrderCount);
+router.get("/ordercount", getOrderCount);
 router.delete("/deleteorder/:id", deleteOrder);
 
 
