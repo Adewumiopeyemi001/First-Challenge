@@ -53,10 +53,15 @@ exports.getOrderCount = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
   try {
     const orderId = req.params.id;
-    await order.findByIdAndDelete({_id: orderId});
-    res.status(200).json({ message: "Order deleted successfully" });
+
+    const deletedOrder = await order.findByIdAndDelete(orderId);
+    if (!deletedOrder) {
+      return res.status(404).json({ message: "Order Not Found" });
+    }
+
+    return res.status(200).json({ message: "Order deleted successfully" });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Order Not Found", err });
+    console.error(err);
+    return res.status(500).json({ message: "Internal Server Error", error: err });
   }
 };
